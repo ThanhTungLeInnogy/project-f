@@ -2,9 +2,9 @@
 
 ## Current dbt-only pipeline status
 
-The root-level dbt-only pipeline has not been run locally or in GitHub Actions. Its eight SQL tests, CSV exports, and financial results still require runtime validation through an authorized GitHub Actions run.
+The root-level dbt-only GitHub Actions run completed successfully: **20 PASS, 0 ERROR**, including all eight SQL tests. Local validation of the generated CSV exports completed with **8/8 PASS**.
 
-The previously reported Actions success validated the earlier Parquet-staging workflow, not this pipeline. A complete row-by-row comparison against the former standalone pipeline has not been performed.
+A complete row-by-row comparison against the former standalone pipeline has not been performed.
 
 ## Reference audit figures
 
@@ -24,4 +24,4 @@ These figures were documented during validation of the former pipeline; they are
 - **Reporting dates:** 231 lines dated September 30 UTC report as October 1 in Prague; exclude them from Q3.
 - **Pending checks:** Customer-ID preservation and anomaly analysis were not independently verified.
 
-**Status:** dbt is the primary workflow, but this dbt-only implementation has not been runtime-validated. Historical audit figures above refer to validation of the former pipeline and are not evidence that the current dbt outputs match it. Full row-level reconciliation remains unperformed.
+**Status:** The dbt-only pipeline and local CSV validation passed. Historical audit figures above refer to the former pipeline and are not evidence of full dataset reconciliation. Full row-by-row reconciliation remains unperformed.

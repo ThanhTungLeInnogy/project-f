@@ -10,9 +10,9 @@
 
 Acceptance: source exploration and cross-source findings are recorded in [analysis/exploration/](analysis/exploration/).
 
-### Task 2 — Clean and model data (`IMPLEMENTED; RUNTIME VALIDATION PENDING`)
+### Task 2 — Clean and model data (`DONE`)
 
-Acceptance: the six raw CSV sources feed six typed S1 SQL views, two S2 intermediate views, and the two final S3 business tables; `dbt build` runs all eight SQL tests and writes both CSV exports. Validate with the authorized GitHub Actions workflow.
+Acceptance: the six raw CSV sources feed six typed S1 SQL views, two S2 intermediate tables, and the two final S3 business tables; `dbt build` runs all eight SQL tests and writes both CSV exports. GitHub Actions completed with 20 PASS and 0 ERROR; local CSV validation completed with 8/8 PASS.
 
 ### Task 3 — Answer management questions (`DONE`)
 
@@ -28,6 +28,6 @@ Acceptance: concise one-page README accurately documents setup, assumptions, lim
 
 ## Primary data workflow
 
-The dbt project at the repository root is the only transformation workflow. It reads six source CSV files, builds six S1 staging views, two S2 intermediate views, and two S3 business tables, runs eight SQL tests, and generates two CSV exports.
+The dbt project at the repository root is the only transformation workflow. It reads six source CSV files, builds six S1 staging views, two S2 intermediate tables, and two S3 business tables, runs eight SQL tests, and generates two CSV exports.
 
-Runtime validation of this dbt-only layout is pending. The earlier GitHub Actions success was for the previous Parquet-staging workflow and does not validate this version. Full row-level reconciliation against the former standalone pipeline has not been performed.
+The dbt-only GitHub Actions run completed with 20 PASS and 0 ERROR; local validation of both CSV exports completed with 8/8 PASS. Full row-by-row reconciliation against the former standalone pipeline has not been performed.

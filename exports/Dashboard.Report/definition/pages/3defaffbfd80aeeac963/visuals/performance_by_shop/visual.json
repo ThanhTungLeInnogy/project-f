@@ -1,0 +1,347 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "performance_by_shop",
+  "position": {
+    "x": 48.484848484848484,
+    "y": 670.70707070707067,
+    "z": 6000,
+    "height": 408.88888888888886,
+    "width": 972.92929292929284,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_shop"
+                    }
+                  },
+                  "Property": "shop"
+                }
+              },
+              "queryRef": "dim_shop.shop",
+              "nativeQueryRef": "shop",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "CZK Net Sales"
+                }
+              },
+              "queryRef": "_measures.CZK Net Sales",
+              "nativeQueryRef": "CZK Net Sales",
+              "displayName": "Net Sales"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "CZK Budget"
+                }
+              },
+              "queryRef": "_measures.CZK Budget",
+              "nativeQueryRef": "CZK Budget",
+              "displayName": "Budget"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "% Budget Variance"
+                }
+              },
+              "queryRef": "_measures.% Budget Variance",
+              "nativeQueryRef": "vs Budget",
+              "displayName": "vs Budget"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "# Orders"
+                }
+              },
+              "queryRef": "_measures.# Orders",
+              "nativeQueryRef": "Orders",
+              "displayName": "Orders"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "CZK AOV"
+                }
+              },
+              "queryRef": "_measures.CZK AOV",
+              "nativeQueryRef": "Average order value",
+              "displayName": "Average order value"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "% Discount Rate"
+                }
+              },
+              "queryRef": "_measures.% Discount Rate",
+              "nativeQueryRef": "Discount Rate",
+              "displayName": "Discount Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "% Bundle Sales Share"
+                }
+              },
+              "queryRef": "_measures.% Bundle Sales Share",
+              "nativeQueryRef": "Bundle Sales Share",
+              "displayName": "Bundle Sales Share"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "% Known-Cost Margin"
+                }
+              },
+              "queryRef": "_measures.% Known-Cost Margin",
+              "nativeQueryRef": "Known-Cost Margin",
+              "displayName": "Known-Cost Margin"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Performance by Shop'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "75f827237b533fc3386f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_shop"
+              }
+            },
+            "Property": "shop"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b78589d2bc1e55f37548",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "CZK Net Sales"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9438d277f4b4d9ef0021",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "CZK Budget"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "04e1f333be407656d1a5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "% Budget Variance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3b521d5f86134c0cb273",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "% Known-Cost Margin"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9faf142cdc3158f9439d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "CZK AOV"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bf98b9266dac3831b4ab",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "# Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0b888b4d67f3482eb9d0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "% Discount Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "8954cc029f9c500a2235",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "% Bundle Sales Share"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

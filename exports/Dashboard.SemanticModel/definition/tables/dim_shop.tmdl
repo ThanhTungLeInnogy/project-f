@@ -1,0 +1,32 @@
+table dim_shop
+	lineageTag: 4996128d-77ff-429b-a930-9c7b2820abe4
+
+	column shop
+		dataType: string
+		lineageTag: 56b986cd-bdb2-4b90-a355-8376eafd2b1c
+		summarizeBy: none
+		sourceColumn: shop
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_shop = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({
+				        Table.SelectColumns(fact_sales, {"shop"}),
+				        Table.SelectColumns(fact_daily_metrics, {"shop"}),
+				        Table.SelectColumns(raw_budget, {"shop"})
+				    }),
+				    DistinctShops = Table.Distinct(Source),
+				    Sorted = Table.Sort(
+				        DistinctShops,
+				        {{"shop", Order.Ascending}}
+				    )
+				in
+				    Sorted
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

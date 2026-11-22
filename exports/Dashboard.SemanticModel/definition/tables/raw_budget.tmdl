@@ -1,0 +1,85 @@
+table raw_budget
+	lineageTag: 7d4ea58d-e170-4e54-a8b6-da405986a660
+
+	column month
+		dataType: string
+		lineageTag: 0e145b98-546a-4da5-b2b8-4a3191d9ef15
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column shop
+		dataType: string
+		lineageTag: 04eac2c8-54cf-4bc7-a599-e23d3c82c6d3
+		summarizeBy: none
+		sourceColumn: shop
+
+		annotation SummarizationSetBy = Automatic
+
+	column orders_budget
+		dataType: int64
+		formatString: 0
+		lineageTag: 42884b17-c0b7-46ae-b6d4-2a78888b783b
+		summarizeBy: sum
+		sourceColumn: orders_budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_sales_czk_budget
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: e43d7503-a0d6-4741-92e7-40465684c44f
+		summarizeBy: sum
+		sourceColumn: net_sales_czk_budget
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column MonthDateKey
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 29f92373-18d2-4f4a-b2ab-e1b08d836c73
+		summarizeBy: none
+		sourceColumn: MonthDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition raw_budget = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\le1\OneDrive - INNOGY CZ\Desktop\projects\fabini-publication\raw_data\raw_budget.csv"),
+				        [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				    ),
+				
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				
+				    Typed = Table.TransformColumnTypes(
+				        Headers,
+				        {
+				            {"month", type text},
+				            {"shop", type text},
+				            {"orders_budget", Int64.Type},
+				            {"net_sales_czk_budget", Currency.Type}
+				        },
+				        "en-US"
+				    ),
+				
+				    MonthDateKey = Table.AddColumn(
+				        Typed,
+				        "MonthDateKey",
+				        each Date.FromText([month] & "-01", [Format="yyyy-MM-dd", Culture="en-US"]),
+				        type date
+				    )
+				in
+				    MonthDateKey
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

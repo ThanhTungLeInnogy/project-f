@@ -1,0 +1,226 @@
+table _measures
+	lineageTag: c3039a77-2679-4cfb-89bf-5aeee84cf3c1
+
+	measure 'CZK Net Sales' =
+			
+			SUM ( 'fact_sales'[net_sales_czk] )
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		displayFolder: Sales
+		lineageTag: 79d955de-487d-47ac-877d-e871417ad57b
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '% Budget Variance' =
+			
+			DIVIDE ( [CZK Net Sales] - [CZK Budget], [CZK Budget] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: Budget
+		lineageTag: dc2f94ff-d3e4-4cfa-bfde-4476fb16c179
+
+	measure 'CZK Budget' =
+			
+			SUM ( 'raw_budget'[net_sales_czk_budget] )
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		displayFolder: Budget
+		lineageTag: 9147825c-9a42-4c5d-83e6-729946dd4c22
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure 'CZK Budget Variance' =
+			
+			[CZK Net Sales] - [CZK Budget]
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		displayFolder: Budget
+		lineageTag: ff2776cf-b537-40a4-9e19-b66045c06acc
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '% Budget Attainment' =
+			
+			DIVIDE ( [CZK Net Sales], [CZK Budget] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: Budget
+		lineageTag: 2c143bca-adef-481f-b087-a4f92abd7298
+
+	measure 'CZK Known COGS' =
+			
+			SUM ( 'fact_daily_metrics'[known_cogs_czk] )
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 3ddbbc12-cf42-4dda-b304-56b8bda31050
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure 'CZK Uncosted Net Sales' =
+			
+			SUM ( 'fact_daily_metrics'[uncosted_net_sales_czk] )
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 834a669f-d58f-444c-b2b7-4838c4cb4048
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '# Unknown Cost Lines' =
+			
+			SUM ( 'fact_daily_metrics'[unknown_cost_line_count] )
+		formatString: 0
+		lineageTag: c90a12b3-6520-4646-9274-a8eba206f871
+
+	measure 'CZK Gross Margin' =
+			
+			IF (
+			    [# Unknown Cost Lines] > 0,
+			    BLANK (),
+			    [CZK Net Sales] - [CZK Known COGS]
+			)
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 2696dfdd-4eb4-4040-97a7-fc7b568a2aeb
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '% Gross Margin' =
+			
+			DIVIDE ( [CZK Gross Margin], [CZK Net Sales] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 7109fadb-6249-4e47-9015-aaaf2a43f3a1
+
+	measure '% Known-Cost Margin' =
+			
+			VAR _KnownCostSales =
+			    [CZK Net Sales]
+			        - COALESCE ( [CZK Uncosted Net Sales], 0 )
+			VAR _KnownCostCOGS =
+			    [CZK Known COGS]
+			RETURN
+			    DIVIDE (
+			        _KnownCostSales - _KnownCostCOGS,
+			        _KnownCostSales
+			    )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		displayFolder: Budget
+		lineageTag: 699773da-f09d-4c10-8c50-79723f67dd99
+
+	measure '% Cost Coverage' =
+			
+			DIVIDE (
+			    [CZK Net Sales] - COALESCE ( [CZK Uncosted Net Sales], 0 ),
+			    [CZK Net Sales]
+			)
+		lineageTag: 507a6477-68af-4f38-b7a9-8b1402ee34a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CZK Known Gross Profit' =
+			
+			SUMX (
+			    FILTER (
+			        'fact_sales',
+			        NOT ISBLANK ( 'fact_sales'[cogs_czk] )
+			    ),
+			    'fact_sales'[net_sales_czk] - 'fact_sales'[cogs_czk]
+			)
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		displayFolder: Budget
+		lineageTag: 41d2a862-1b2a-4307-b533-7102e411b30d
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '# Orders' =
+			
+			DISTINCTCOUNT ( 'fact_sales'[order_id] )
+		formatString: 0
+		lineageTag: 98a20a2b-d201-4541-9f3b-f579ff7e6269
+
+	measure 'CZK AOV' =
+			
+			DIVIDE ( [CZK Net Sales], [# Orders] )
+		formatString: #,0\ "Kč";-#,0\ "Kč";#,0\ "Kč"
+		lineageTag: 1650edfa-6230-4016-ac6e-88510eb5f35d
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure 'CZK Budget Allocated' =
+			
+			SUMX (
+			    VALUES ( 'calendar'[Date] ),
+			    VAR _Date = 'calendar'[Date]
+			    VAR _MonthStart =
+			        DATE ( YEAR ( _Date ), MONTH ( _Date ), 1 )
+			    VAR _DaysInMonth =
+			        DAY ( EOMONTH ( _Date, 0 ) )
+			    VAR _MonthlyBudget =
+			        CALCULATE (
+			            [CZK Budget],
+			            REMOVEFILTERS ( 'calendar' ),
+			            'calendar'[Date] = _MonthStart
+			        )
+			    RETURN
+			        DIVIDE ( _MonthlyBudget, _DaysInMonth )
+			)
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 139f9150-e220-4c35-a888-c261e31c2b69
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure 'CZK Discounts' =
+			
+			SUM ( 'fact_sales'[discounts_czk] )
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 810a5783-def0-49e8-875f-9b470d5a59c2
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '% Discount Rate' =
+			
+			DIVIDE (
+			    [CZK Discounts],
+			    SUM ( 'fact_sales'[gross_sales_czk] )
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 3c13f8a8-ec6c-468b-9bd1-ec72d2c6ff80
+
+	measure '% Orders vs Budget' =
+			
+			DIVIDE (
+			    [# Orders] - SUM ( 'raw_budget'[orders_budget] ),
+			    SUM ( 'raw_budget'[orders_budget] )
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 39f612e1-e5f2-4c64-a7ec-58bf38d71b83
+
+	measure 'CZK Bundle Sales' =
+			
+			CALCULATE (
+			    [CZK Net Sales],
+			    KEEPFILTERS ( 'fact_sales'[is_bundle_component] = TRUE () )
+			)
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: fc7b6c05-2b01-4264-b6c2-e05c6af1af98
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	measure '% Bundle Sales Share' =
+			
+			DIVIDE (
+			    [CZK Bundle Sales],
+			    [CZK Net Sales]
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 28d35614-3408-43a7-a747-79eb105587d3
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 70c12499-6307-4c86-991b-bae625a70d79
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = b3a40dbc4170454c8123faa8ce974baf
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+
