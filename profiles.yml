@@ -1,0 +1,8 @@
+fabini:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: fabini_dbt.duckdb
+      schema: main
+      threads: 1

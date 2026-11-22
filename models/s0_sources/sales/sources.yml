@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw
+    tables:
+      - name: orders_cz
+        config:
+          external_location: "read_csv('raw_data/raw_orders_cz.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
+      - name: orders_sk
+        config:
+          external_location: "read_csv('raw_data/raw_orders_sk.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
+      - name: orders_hu
+        config:
+          external_location: "read_csv('raw_data/raw_orders_hu.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
+      - name: products
+        config:
+          external_location: "read_csv('raw_data/raw_products.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
+      - name: fx_rates
+        config:
+          external_location: "read_csv('raw_data/raw_fx_rates.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
+      - name: budget
+        config:
+          external_location: "read_csv('raw_data/raw_budget.csv', header=true, all_varchar=true, nullstr='', delim=',', auto_detect=true)"
