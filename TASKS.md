@@ -12,7 +12,7 @@ Acceptance: source exploration and cross-source findings are recorded.
 
 ### Task 2 — Clean and model data (`DONE`)
 
-Acceptance: validated staging, intermediate models, and two final facts; audit and limitations are recorded in [tests/AUDIT.md](tests/AUDIT.md).
+Acceptance: six staged sources feed the four dbt models; dbt tests and the two final CSV exports are documented in [tests/AUDIT.md](tests/AUDIT.md).
 
 ### Task 3 — Answer management questions (`DONE`)
 
@@ -26,12 +26,8 @@ Acceptance: one completed Power BI page and exported PDF in `dashboard/`.
 
 Acceptance: concise one-page [README.md](README.md) accurately documents setup, assumptions, limitations, outputs, and one-day improvements; complete final consistency and submission review.
 
-## dbt migration validation
+## Primary data workflow
 
-The dbt project in `dbt_poc/` contains six staged sources, four business models, eight SQL data-quality tests, and two CSV exports. The manual `dbt-ci.yml` workflow runs the six Polars staging notebooks, `dbt build`, tests, and export checks.
+The dbt project in `dbt_poc/` is the sole SQL transformation workflow. It declares six staged sources, builds four business models, runs eight SQL data-quality tests, and generates two CSV exports.
 
-- **Standalone DuckDB pipeline:** executed and validated; remains the reference baseline.
-- **dbt implementation:** static validation passed; runtime **NOT RUN**.
-- **GitHub Actions:** configured for manual execution; **NOT RUN**.
-
-Remaining: run the workflow after it is available on the default branch, resolve any installation or runtime issues, and reconcile dbt results and exports against the standalone baseline. Do not replace the standalone runner until validation passes.
+The latest reported GitHub Actions run completed staging and `dbt build` successfully and generated both exports. A complete row-by-row comparison against the former standalone pipeline has not been performed.

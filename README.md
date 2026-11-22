@@ -1,26 +1,28 @@
 # FABINI Data & BI Case Study
 
-This project stages six source CSVs, models sales, answers four management questions, and targets a one-page Power BI report. Tasks 1–3 are complete; the dashboard and final submission review remain outstanding.
+This project stages six source CSVs, uses dbt Core with DuckDB as its SQL modeling workflow, answers four management questions, and targets a one-page Power BI report. Tasks 1–3 are complete; the dashboard and final submission review remain outstanding.
 
 ## Data flow and dbt build
 
-The six Polars notebooks in `s1_staging/notebooks/` read `raw_data/raw_*.csv` and write Parquet files to `s1_staging/data/`. The dbt project declares those six Parquet datasets as sources and builds four models: `int_orders`, `int_sales_lines`, `fact_sales`, and `fact_daily_metrics`. It includes eight focused SQL data-quality tests and exports `fact_sales.csv` and `fact_daily_metrics.csv` under `dbt_poc/`.
+Install the project dependencies with `pip install -r requirements.txt`. The six Polars notebooks in `s1_staging/notebooks/` read `raw_data/raw_*.csv` and write Parquet files to `s1_staging/data/`. Run those notebooks before building the dbt project.
 
-From the repository root, the dbt build command is:
+The dbt project declares the six Parquet datasets as sources and builds four models: `int_orders`, `int_sales_lines`, `fact_sales`, and `fact_daily_metrics`. It includes eight SQL data-quality tests and exports `fact_sales.csv` and `fact_daily_metrics.csv` under `dbt_poc/`.
+
+From the repository root, run:
 
 ```shell
 dbt build --project-dir dbt_poc --profiles-dir dbt_poc
 ```
 
-The GitHub Actions workflow, [dbt-ci.yml](.github/workflows/dbt-ci.yml), installs its pinned dependencies, executes staging, runs `dbt build` and checks/uploads the exports. It uses Python 3.11 and the `workflow_dispatch` event for manual runs from the Actions tab.
+The GitHub Actions workflow, [dbt-ci.yml](.github/workflows/dbt-ci.yml), installs its pinned dependencies, executes staging, runs `dbt build`, and checks and uploads both exports. It uses Python 3.11 and the `workflow_dispatch` event for manual runs from the Actions tab.
+
+The four management SQL analyses in `analysis/` query the dbt output tables in `dbt_poc/fabini_poc.duckdb`. Run them with a DuckDB client connected to that database and with the repository root as the working directory; the budget and product lookups use staged Parquet paths relative to the root.
 
 ## Validation status
 
-- **Standalone DuckDB pipeline:** executed and validated; retained as the reference baseline until dbt passes full reconciliation.
-- **dbt implementation:** static validation passed; runtime **NOT RUN**. Its financial results and CSV contents are not yet validated.
-- **GitHub Actions:** configured; **NOT RUN**.
+- **GitHub Actions:** the latest reported run completed staging and `dbt build` successfully, including all eight SQL tests, and generated both expected CSV exports.
+- **Reconciliation limitation:** a complete row-by-row comparison against the former standalone pipeline was not performed.
 
-Do not replace or remove the standalone runner until dbt has passed runtime, financial, and export reconciliation.
 
 ## Assumptions and limitations
 
