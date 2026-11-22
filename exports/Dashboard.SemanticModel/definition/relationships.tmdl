@@ -1,0 +1,24 @@
+relationship 951b0fb6-a992-e378-71d1-3e9939de8644
+	fromColumn: raw_budget.MonthDateKey
+	toColumn: calendar.Date
+
+relationship 6d2c721a-0969-6e7f-5ff4-ed4e078c02c8
+	fromColumn: fact_sales.reporting_date
+	toColumn: calendar.Date
+
+relationship 4948c21e-60db-c68e-779b-d5b0453196dd
+	fromColumn: fact_daily_metrics.reporting_date
+	toColumn: calendar.Date
+
+relationship 3ec9adeb-de4e-d1b6-95d5-7ce2cc96390d
+	fromColumn: raw_budget.shop
+	toColumn: dim_shop.shop
+
+relationship e795940d-870c-6627-03be-a9a7e542aa58
+	fromColumn: fact_sales.shop
+	toColumn: dim_shop.shop
+
+relationship db46ab70-273d-3561-2407-fe84cbb7a6d1
+	fromColumn: fact_daily_metrics.shop
+	toColumn: dim_shop.shop
+

@@ -1,0 +1,52 @@
+EVALUATE
+VAR _Period =
+    DATESBETWEEN (
+        'calendar'[Date],
+        DATE ( 2026, 5, 1 ),
+        DATE ( 2026, 5, 31 )
+    )
+
+RETURN
+    CALCULATETABLE (
+        SUMMARIZECOLUMNS (
+            'fact_sales'[category],
+
+            "Sales Rows",
+                COUNTROWS ( 'fact_sales' ),
+
+            "Net Sales CZK",
+                SUM ( 'fact_sales'[net_sales_czk] ),
+
+            "Known COGS CZK",
+                SUM ( 'fact_sales'[cogs_czk] ),
+
+            "Unknown Cost Lines",
+                COUNTROWS (
+                    FILTER (
+                        'fact_sales',
+                        ISBLANK ( 'fact_sales'[cogs_czk] )
+                    )
+                ),
+
+            "Known Gross Profit CZK",
+                [CZK Known Gross Profit],
+
+            "Known-Cost Margin %",
+                VAR _KnownSales =
+                    SUMX (
+                        FILTER (
+                            'fact_sales',
+                            NOT ISBLANK ( 'fact_sales'[cogs_czk] )
+                        ),
+                        'fact_sales'[net_sales_czk]
+                    )
+                RETURN
+                    DIVIDE (
+                        _KnownSales - SUM ( 'fact_sales'[cogs_czk] ),
+                        _KnownSales
+                    ) * 100
+        ),
+        _Period
+    )
+
+ORDER BY [Net Sales CZK] DESC

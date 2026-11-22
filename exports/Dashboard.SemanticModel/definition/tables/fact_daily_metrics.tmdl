@@ -1,0 +1,210 @@
+table fact_daily_metrics
+	lineageTag: 8edb6c4c-4216-48ad-9d3a-3d0930012708
+
+	column reporting_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e9240610-e714-43b7-95d8-d6ee7cbe0d46
+		summarizeBy: none
+		sourceColumn: reporting_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column reporting_month
+		dataType: string
+		lineageTag: 3378d9b9-08db-48ae-9998-bf1379ab3c59
+		summarizeBy: none
+		sourceColumn: reporting_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column shop
+		dataType: string
+		lineageTag: bf34a2b2-9ee4-4f0e-8c71-48762f192c8c
+		summarizeBy: none
+		sourceColumn: shop
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_sales_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 0699b156-8654-4199-9d99-d8f242c3bc3e
+		summarizeBy: sum
+		sourceColumn: gross_sales_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column discounts_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: d3d1c3a0-ac93-4c72-9f80-3c01e6802ca9
+		summarizeBy: sum
+		sourceColumn: discounts_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column net_sales_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 187e9455-d2eb-4887-9960-4f35a24d955e
+		summarizeBy: sum
+		sourceColumn: net_sales_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column cogs_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: ee6270b6-676a-420c-bac3-55b4b2744fc6
+		summarizeBy: sum
+		sourceColumn: cogs_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column known_cogs_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 4581b89d-db85-4609-8525-287258f82f94
+		summarizeBy: sum
+		sourceColumn: known_cogs_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column uncosted_net_sales_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 466f1909-88d9-477b-a1cb-7746557cd200
+		summarizeBy: sum
+		sourceColumn: uncosted_net_sales_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column unknown_cost_line_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f6ef19ad-3c1c-4116-a760-4e7d9fb75003
+		summarizeBy: sum
+		sourceColumn: unknown_cost_line_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_margin_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 284f5b9d-0810-4126-9dfd-4b9039d26e9f
+		summarizeBy: sum
+		sourceColumn: gross_margin_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column gross_margin_pct
+		dataType: double
+		lineageTag: 60e3f949-0038-41bc-8c0a-ed39a7511365
+		summarizeBy: sum
+		sourceColumn: gross_margin_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_count
+		dataType: int64
+		formatString: 0
+		lineageTag: eb8693a4-9348-4320-8eff-74195812219e
+		summarizeBy: sum
+		sourceColumn: order_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthDateKey
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7f54ea42-fd58-4857-a951-f2e1f7d8c0c3
+		summarizeBy: none
+		sourceColumn: MonthDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fact_daily_metrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\le1\OneDrive - INNOGY CZ\Desktop\projects\fabini-publication\exports\fact_daily_metrics.csv"),
+				        [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				    ),
+				
+				    Headers = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars=true]
+				    ),
+				
+				    // Convert DuckDB NULL token to actual null
+				    Nulls = Table.ReplaceValue(
+				        Headers,
+				        "\N",
+				        null,
+				        Replacer.ReplaceValue,
+				        Table.ColumnNames(Headers)
+				    ),
+				
+				    // Financial columns in CZK
+				    FinancialColumns = List.Select(
+				        Table.ColumnNames(Nulls),
+				        each Text.EndsWith(_, "_czk")
+				    ),
+				
+				    FinancialTypes = List.Transform(
+				        FinancialColumns,
+				        each {_, Currency.Type}
+				    ),
+				
+				    // Other column types
+				    OtherTypes = {
+				        {"reporting_date", type date},
+				        {"reporting_month", type text},
+				        {"shop", type text},
+				        {"unknown_cost_line_count", Int64.Type},
+				        {"gross_margin_pct", type number},
+				        {"order_count", Int64.Type}
+				    },
+				
+				    Typed = Table.TransformColumnTypes(
+				        Nulls,
+				        List.Combine({OtherTypes, FinancialTypes}),
+				        "en-US"
+				    ),
+				
+				    // First day of reporting month for dimension relationships
+				    MonthDateKey = Table.AddColumn(
+				        Typed,
+				        "MonthDateKey",
+				        each Date.StartOfMonth([reporting_date]),
+				        type date
+				    )
+				in
+				    MonthDateKey
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

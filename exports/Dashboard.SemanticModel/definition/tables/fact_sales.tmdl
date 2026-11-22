@@ -1,0 +1,360 @@
+table fact_sales
+	lineageTag: 4ee82439-2154-40a5-830a-0aefc1210451
+
+	column shop
+		dataType: string
+		lineageTag: 89cb1e4f-fcac-44c3-9d88-e72448bb04a5
+		summarizeBy: none
+		sourceColumn: shop
+
+		annotation SummarizationSetBy = Automatic
+
+	column reporting_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d0005a2c-3e15-4e4d-9746-03e4ff090c43
+		summarizeBy: none
+		sourceColumn: reporting_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column reporting_month
+		dataType: string
+		lineageTag: b1302dd7-68af-4ddc-b7d2-b5ae8a2a1fdf
+		summarizeBy: none
+		sourceColumn: reporting_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 1ec334a2-585b-4634-8de8-a9e0263ea212
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_id
+		dataType: string
+		lineageTag: b3424533-d062-4ba5-940a-7fc192921bec
+		summarizeBy: none
+		sourceColumn: line_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_sku
+		dataType: string
+		lineageTag: 0e7f6cd5-a07e-4695-878d-66fb13290aab
+		summarizeBy: none
+		sourceColumn: source_sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column sku
+		dataType: string
+		lineageTag: 2f595131-c51a-442a-9b1c-b3de2f538ee4
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 4a98baa1-ebf5-4c68-bca5-6b9a504707f7
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 2824fd96-2bc6-4fbf-9f0c-884a024dbb61
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_match_status
+		dataType: string
+		lineageTag: 67257bc9-a3ff-4942-8637-f0604cebf14f
+		summarizeBy: none
+		sourceColumn: product_match_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 28b851a7-338a-4397-8087-56ed404b1d47
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency
+		dataType: string
+		lineageTag: 8b1c3554-da5a-4076-941c-1730cf12a75f
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column fx_rate_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0bd7d3e6-4f87-4da1-abaf-0cf8ab95b916
+		summarizeBy: none
+		sourceColumn: fx_rate_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fx_rate
+		dataType: double
+		lineageTag: d3a469e6-ec37-4d8f-bfcb-4007c1791754
+		summarizeBy: sum
+		sourceColumn: fx_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 95d4bfb8-d637-4b98-a1e3-fc86d9ef5ea8
+		summarizeBy: none
+		sourceColumn: created_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_line_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 48a5ed4a-24eb-45bd-bac8-f5a746b353cc
+		summarizeBy: sum
+		sourceColumn: source_line_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column bundle_component_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9583096c-f15d-4413-9beb-454b3da256bd
+		summarizeBy: sum
+		sourceColumn: bundle_component_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column sold_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: ab8dbed5-ed41-457a-b1d4-98dbe8577c8c
+		summarizeBy: sum
+		sourceColumn: sold_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_bundle_component
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 352220fa-9006-490e-ae53-0d90d467f4f0
+		summarizeBy: none
+		sourceColumn: is_bundle_component
+
+		annotation SummarizationSetBy = Automatic
+
+	column component_ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 72c133be-81a6-4b34-9231-01d242ea9bc2
+		summarizeBy: sum
+		sourceColumn: component_ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_cost_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 5c284090-004b-4cfa-a099-6c9263352434
+		summarizeBy: sum
+		sourceColumn: unit_cost_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column gross_sales_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 239003b9-ff71-49a9-800a-dd3b0691317e
+		summarizeBy: sum
+		sourceColumn: gross_sales_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column discounts_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: e6aeabb1-a6e2-4ea0-998c-13eef0680cda
+		summarizeBy: sum
+		sourceColumn: discounts_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column net_sales_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 4813827c-ed35-4353-95ff-4c2405664b15
+		summarizeBy: sum
+		sourceColumn: net_sales_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column cogs_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: 1fb189e9-c681-4c4e-ae34-b291f88a428e
+		summarizeBy: sum
+		sourceColumn: cogs_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column gross_margin_czk
+		dataType: decimal
+		formatString: #,0.###############\ "Kč";-#,0.###############\ "Kč";#,0.###############\ "Kč"
+		lineageTag: a29e01c9-41c5-4eec-9ed6-8e9b1e7badf6
+		summarizeBy: sum
+		sourceColumn: gross_margin_czk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"cs-CZ"}
+
+	column MonthDateKey
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 047f73dc-f4ec-4fbc-a2f8-4792e905f5a6
+		summarizeBy: none
+		sourceColumn: MonthDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\le1\OneDrive - INNOGY CZ\Desktop\projects\fabini-publication\exports\fact_sales.csv"),
+				        [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				    ),
+				
+				    Headers = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars=true]
+				    ),
+				
+				    // DuckDB export: \N represents SQL NULL
+				    Nulls = Table.ReplaceValue(
+				        Headers,
+				        "\N",
+				        null,
+				        Replacer.ReplaceValue,
+				        Table.ColumnNames(Headers)
+				    ),
+				
+				    // Financial columns
+				    FinancialColumns = {
+				        "unit_cost_czk",
+				        "gross_sales_czk",
+				        "discounts_czk",
+				        "net_sales_czk",
+				        "cogs_czk",
+				        "gross_margin_czk"
+				    },
+				
+				    FinancialTypes = List.Transform(
+				        FinancialColumns,
+				        each {_, Currency.Type}
+				    ),
+				
+				    // Other data types
+				    OtherTypes = {
+				        {"shop", type text},
+				        {"reporting_date", type date},
+				        {"reporting_month", type text},
+				        {"order_id", type text},
+				        {"line_id", type text},
+				        {"source_sku", type text},
+				        {"sku", type text},
+				        {"product_name", type text},
+				        {"category", type text},
+				        {"product_match_status", type text},
+				        {"customer_id", type text},
+				        {"currency", type text},
+				        {"fx_rate_date", type date},
+				        {"fx_rate", type number},
+				        {"created_at", type datetimezone},
+				        {"source_line_quantity", Int64.Type},
+				        {"bundle_component_quantity", Int64.Type},
+				        {"sold_quantity", Int64.Type},
+				        {"is_bundle_component", type logical},
+				        {"component_ordinal", Int64.Type}
+				    },
+				
+				    // Apply column types
+				    Typed = Table.TransformColumnTypes(
+				        Nulls,
+				        List.Combine({OtherTypes, FinancialTypes}),
+				        "en-US"
+				    ),
+				
+				    // Replace missing category and product names with explicit labels
+				    ProductLabels = Table.TransformColumns(
+				        Typed,
+				        {
+				            {
+				                "category",
+				                each
+				                    if _ = null or Text.Trim(_) = ""
+				                    then "Unknown"
+				                    else _,
+				                type text
+				            },
+				            {
+				                "product_name",
+				                each
+				                    if _ = null or Text.Trim(_) = ""
+				                    then "Unknown Product"
+				                    else _,
+				                type text
+				            }
+				        }
+				    ),
+				
+				    // Monthly key for relationships and filtering
+				    MonthDateKey = Table.AddColumn(
+				        ProductLabels,
+				        "MonthDateKey",
+				        each Date.StartOfMonth([reporting_date]),
+				        type date
+				    )
+				in
+				    MonthDateKey
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
