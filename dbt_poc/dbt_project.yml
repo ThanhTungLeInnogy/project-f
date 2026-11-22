@@ -1,0 +1,16 @@
+name: fabini_poc
+version: "1.0.0"
+config-version: 2
+
+profile: fabini_poc
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  fabini_poc:
+    s2_intermediate:
+      +materialized: table
+    s3_marts:
+      +materialized: table
+    exports:
+      +materialized: external

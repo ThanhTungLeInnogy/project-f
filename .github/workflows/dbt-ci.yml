@@ -1,0 +1,77 @@
+name: FABINI dbt CI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install execution dependencies
+        run: >-
+          python -m pip install
+          polars==2.1.0
+          duckdb==2.0.1
+          ipykernel==7.4.0
+          nbconvert==7.16.6
+          dbt-core==1.12.7
+          dbt-duckdb==1.11.1
+
+      - name: Register Python notebook kernel
+        run: python -m ipykernel install --sys-prefix --name python3 --display-name "Python 3"
+
+      - name: Stage source CSVs
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/executed-notebooks"
+          for notebook in \
+            s1_staging/notebooks/01_stage_orders_cz.ipynb \
+            s1_staging/notebooks/01_stage_orders_sk.ipynb \
+            s1_staging/notebooks/01_stage_orders_hu.ipynb \
+            s1_staging/notebooks/01_stage_products.ipynb \
+            s1_staging/notebooks/01_stage_fx_rates.ipynb \
+            s1_staging/notebooks/01_stage_budget.ipynb
+          do
+            jupyter nbconvert \
+              --to notebook \
+              --execute \
+              --output-dir "$RUNNER_TEMP/executed-notebooks" \
+              --ExecutePreprocessor.cwd=. \
+              --ExecutePreprocessor.timeout=600 \
+              "$notebook"
+          done
+
+          for dataset in orders_cz orders_sk orders_hu products fx_rates budget
+          do
+            test -s "s1_staging/data/${dataset}.parquet"
+          done
+
+      - name: Build dbt models and run tests
+        run: dbt build --project-dir dbt_poc --profiles-dir dbt_poc
+
+      - name: Verify CSV exports
+        run: |
+          test -s dbt_poc/fact_sales.csv
+          test -s dbt_poc/fact_daily_metrics.csv
+
+      - name: Upload validated CSV exports
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fabini-dbt-csv-exports
+          path: |
+            dbt_poc/fact_sales.csv
+            dbt_poc/fact_daily_metrics.csv
+          if-no-files-found: error
+          retention-days: 7
