@@ -41,11 +41,16 @@ The [dbt-ci.yml](.github/workflows/dbt-ci.yml) workflow runs manually from GitHu
 
 ## Analysis and limitations
 
-Four management SQL analyses are in `analysis/`; the Task 1 source-exploration notebooks are in `analysis/exploration/`. Results are summarized in [answers.md](answers.md).
+Four management SQL analyses are available in `analysis/`, with source-exploration notebooks in `analysis/exploration/`. Business findings are summarized in [answers.md](answers.md).
 
-Business calculations preserve VAT rates of 21% (CZ), 23% (SK), and 27% (HU), use the latest FX rate on or before the Prague reporting date, exclude cancelled lines, and allocate bundle sales by component cost share. Gross sales and discounts are rounded separately to CZK cents before net sales. Missing costs remain NULL.
+**Data quality and transformation challenges:**
+- **Missing product metadata:** Four SKUs are absent from the product catalog, leaving 277 sales rows without known costs. Missing COGS remain NULL, so overall gross margin cannot be fully determined.
+- **Bundle expansion:** Bundles are expanded into individual SKU components, with sales and discounts allocated by component cost share to avoid double-counting revenue.
+- **Currency conversion:** Sales from CZ, SK, and HU are reported in CZK using the latest available FX rate on or before the applicable reporting date.
+- **Reporting dates:** Timestamps are converted to Prague time. Some September 30 UTC transactions fall on October 1 locally and are excluded from Q3.
+- **Different data granularities:** Sales are modeled at the order-line component level, daily metrics at date × shop, and budgets at month × shop. Daily budget comparisons use an even allocation of monthly targets rather than actual daily forecasts.
 
-The reporting period is January–September 2026. Lines dated September 30 UTC can report as October 1 in Prague and are treated as spillover, not Q3. Four SKUs are absent from the product catalog, leaving 277 sales rows without known costs; total COGS and margin are incomplete.
+Business calculations account for VAT rates of 21% (CZ), 23% (SK), and 27% (HU), exclude cancelled lines, and round gross sales and discounts separately to CZK cents before calculating net sales.
 
 ## Power BI Dashboard
 
