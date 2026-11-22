@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: staged
+    meta:
+      external_location: "read_parquet('s1_staging/data/{name}.parquet')"
+    tables:
+      - name: orders_cz
+      - name: orders_sk
+      - name: orders_hu
+      - name: products
+      - name: fx_rates
+      - name: budget

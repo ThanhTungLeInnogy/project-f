@@ -1,0 +1,29 @@
+sku,product_name,category,unit_cost_czk,is_bundle,bundle_components
+FB-PAN-20,Frying pan 20 cm,Pans,380,FALSE,
+FB-PAN-24,Frying pan 24 cm,Pans,440,FALSE,
+FB-PAN-28,Frying pan 28 cm,Pans,520,FALSE,
+FB-PAN-28-DEEP,Deep frying pan 28 cm,Pans,600,FALSE,
+FB-GRILL-28,Grill pan 28 cm,Pans,560,FALSE,
+FB-WOK-30,Wok 30 cm,Pans,650,FALSE,
+FB-CREPE-26,Crepe pan 26 cm,Pans,400,FALSE,
+FB-POT-16,Pot 16 cm,Pots,430,FALSE,
+FB-POT-20,Pot 20 cm,Pots,540,FALSE,
+FB-POT-24,Pot 24 cm,Pots,680,FALSE,
+FB-CASS-28,Casserole 28 cm,Pots,790,FALSE,
+FB-SAUCE-16,Saucepan 16 cm,Pots,360,FALSE,
+FB-KNF-CHEF,Chef knife 20 cm,Knives,300,FALSE,
+FB-KNF-SANTOKU,Santoku knife 18 cm,Knives,280,FALSE,
+FB-KNF-PARING,Paring knife 9 cm,Knives,140,FALSE,
+FB-KNF-BREAD,Bread knife 22 cm,Knives,250,FALSE,
+FB-LID-20,Glass lid 20 cm,Accessories,90,FALSE,
+FB-LID-24,Glass lid 24 cm,Accessories,105,FALSE,
+FB-LID-28,Glass lid 28 cm,Accessories,120,FALSE,
+FB-SPAT-SIL,Silicone spatula,Accessories,35,FALSE,
+FB-TONGS,Kitchen tongs,Accessories,50,FALSE,
+FB-BOARD-L,Cutting board L,Accessories,210,FALSE,
+FB-MITT,Oven mitt,Accessories,60,FALSE,
+FB-CLEAN-KIT,Cookware care kit,Accessories,70,FALSE,
+FB-SET-PAN3,Pan set 20/24/28 cm,Sets,,TRUE,FB-PAN-20:1|FB-PAN-24:1|FB-PAN-28:1
+FB-SET-POT3,Pot set 16/20/24 cm,Sets,,TRUE,FB-POT-16:1|FB-POT-20:1|FB-POT-24:1
+FB-SET-START,"Starter set: pan 24, lid, spatula",Sets,,TRUE,FB-PAN-24:1|FB-LID-24:1|FB-SPAT-SIL:1
+FB-SET-KNF3,Knife set chef/santoku/paring,Sets,,TRUE,FB-KNF-CHEF:1|FB-KNF-SANTOKU:1|FB-KNF-PARING:1
