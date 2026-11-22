@@ -1,5 +1,5 @@
 -- analysis | management question 2 | Q3 actual vs budget
--- Reads from: fact_daily_metrics, fact_sales, and staged budget Parquet
+-- Reads from: fact_daily_metrics, fact_sales, and vw_12_budget
 -- Period: Prague-local reporting dates, July-September 2026
 
 -- Volume effect = (actual orders - budget orders) * budget AOV.
@@ -29,7 +29,7 @@ budget AS (
         shop,
         SUM(orders_budget) AS budget_order_count,
         SUM(net_sales_czk_budget) AS budget_net_sales_czk
-    FROM read_parquet('s1_staging/data/budget.parquet')
+    FROM vw_12_budget
     WHERE month IN ('2026-07', '2026-08', '2026-09')
     GROUP BY shop
 ),

@@ -8,15 +8,15 @@
 
 ### Task 1 — Explore raw data (`DONE`)
 
-Acceptance: source exploration and cross-source findings are recorded.
+Acceptance: source exploration and cross-source findings are recorded in [analysis/exploration/](analysis/exploration/).
 
-### Task 2 — Clean and model data (`DONE`)
+### Task 2 — Clean and model data (`IMPLEMENTED; RUNTIME VALIDATION PENDING`)
 
-Acceptance: validated staging, intermediate models, and two final facts; audit and limitations are recorded in [tests/AUDIT.md](tests/AUDIT.md).
+Acceptance: the six raw CSV sources feed six typed S1 SQL views, two S2 intermediate views, and the two final S3 business tables; `dbt build` runs all eight SQL tests and writes both CSV exports. Validate with the authorized GitHub Actions workflow.
 
 ### Task 3 — Answer management questions (`DONE`)
 
-Acceptance: four reproducible analyses in `analysis/` and results in [answers.md](answers.md).
+Acceptance: four reproducible analyses in [analysis/](analysis/) and results in [answers.md](answers.md).
 
 ### Task 4 — Build one dashboard page (`TODO`)
 
@@ -24,14 +24,10 @@ Acceptance: one completed Power BI page and exported PDF in `dashboard/`.
 
 ### Task 5 — Final README and submission review (`TODO`)
 
-Acceptance: concise one-page [README.md](README.md) accurately documents setup, assumptions, limitations, outputs, and one-day improvements; complete final consistency and submission review.
+Acceptance: concise one-page README accurately documents setup, assumptions, limitations, outputs, and one-day improvements; complete final consistency and submission review.
 
-## dbt migration validation
+## Primary data workflow
 
-The dbt project in `dbt_poc/` contains six staged sources, four business models, eight SQL data-quality tests, and two CSV exports. The manual `dbt-ci.yml` workflow runs the six Polars staging notebooks, `dbt build`, tests, and export checks.
+The dbt project at the repository root is the only transformation workflow. It reads six source CSV files, builds six S1 staging views, two S2 intermediate views, and two S3 business tables, runs eight SQL tests, and generates two CSV exports.
 
-- **Standalone DuckDB pipeline:** executed and validated; remains the reference baseline.
-- **dbt implementation:** static validation passed; runtime **NOT RUN**.
-- **GitHub Actions:** configured for manual execution; **NOT RUN**.
-
-Remaining: run the workflow after it is available on the default branch, resolve any installation or runtime issues, and reconcile dbt results and exports against the standalone baseline. Do not replace the standalone runner until validation passes.
+Runtime validation of this dbt-only layout is pending. The earlier GitHub Actions success was for the previous Parquet-staging workflow and does not validate this version. Full row-level reconciliation against the former standalone pipeline has not been performed.

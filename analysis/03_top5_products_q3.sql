@@ -1,5 +1,5 @@
 -- analysis | management question 3 | top products by known gross profit
--- Reads from: fact_sales and s1_staging/data/products.parquet
+-- Reads from: fact_sales and vw_12_products
 -- Period: Prague-local reporting dates, July-September 2026
 
 WITH product_sales AS (
@@ -25,7 +25,7 @@ known_products AS (
         CAST(100 * product_sales.discounts_czk / NULLIF(product_sales.gross_sales_czk, 0)
             AS DECIMAL(18, 2)) AS discount_to_gross_sales_pct
     FROM product_sales
-    INNER JOIN read_parquet('s1_staging/data/products.parquet') AS products
+    INNER JOIN vw_12_products AS products
         USING (sku)
     WHERE product_sales.unknown_cost_rows = 0
 ),

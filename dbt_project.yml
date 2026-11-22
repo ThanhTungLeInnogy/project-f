@@ -1,0 +1,16 @@
+name: fabini
+version: "1.0.0"
+config-version: 2
+
+profile: fabini
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  fabini:
+    s1_staging:
+      +materialized: view
+    s2_intermediate:
+      +materialized: table
+    s3_marts:
+      +materialized: table

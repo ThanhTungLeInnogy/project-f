@@ -14,14 +14,10 @@ __pycache__/
 !.github/workflows/dbt-ci.yml
 
 
-# Generated layer outputs
-/s1_staging/data/*
-!/s1_staging/data/.gitkeep
-/s3_marts/data/*
-!/s3_marts/data/.gitkeep
-/dbt_poc/*.csv
-/dbt_poc/target/
-/dbt_poc/dbt_packages/
-/dbt_poc/logs/
+# Generated dbt outputs
+*.parquet
+/exports/*.csv
+/target/
+/dbt_packages/
 /logs/
 /dbt_review.zip

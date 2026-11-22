@@ -1,14 +1,15 @@
+# dbt SQL transformations
+dbt-core==1.12.7
+dbt-duckdb==1.11.1
+
 # Data processing and transformation
 polars==2.1.0
 
-# SQL engine
+# Source exploration and dbt adapter engine
 duckdb==2.0.1
 
-# Jupyter notebooks in VS Code
+# Exploration notebooks in VS Code
 ipykernel==7.4.0
-
-# Parquet interoperability
-pyarrow==11.0.0
 
 # Data visualization (optional exploration)
 matplotlib==3.7.1
