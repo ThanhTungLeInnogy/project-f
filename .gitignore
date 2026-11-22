@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.py[cod]
+*.duckdb
+*.duckdb.wal
+.env
+.env.*
+!.env.example
